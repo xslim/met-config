@@ -130,6 +130,12 @@ function saveAction() {
   var id = modal.find('.modal-body #ws-id').val();
   var payload = {
     url: modal.find('.modal-body #ws-url').val(),
+    depth: modal.find('.modal-body #ws-depth').val(),
+    topn: modal.find('.modal-body #ws-topn').val(),
+    regex: modal.find('.modal-body #ws-regex').val(),
+    indexName: modal.find('.modal-body #ws-indexName').val(),
+    locked: modal.find('.modal-body #ws-locked').val(),
+    updated: modal.find('.modal-body #ws-updated').val(),
   };
   postJSON(api_host+'/websites/'+id, payload, function(data){
     //console.log(data);
