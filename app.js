@@ -107,6 +107,8 @@ $('#wsModal').on('show.bs.modal', function (event) {
       modal.find('.modal-body #ws-topn').val(d.topn);
       modal.find('.modal-body #ws-indexName').val(d.indexName);
       modal.find('.modal-body #ws-regex').val(d.regex);
+      modal.find('.modal-body #ws-locked').val(d.locked); 
+    modal.find('.modal-body #ws-updated').val(d.updated); 
     });
   } else {
     modal.find('.modal-title').text('Creating new website ');
@@ -115,6 +117,8 @@ $('#wsModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body #ws-depth').val(2);
     modal.find('.modal-body #ws-topn').val(50);
     modal.find('.modal-body #ws-indexName').val('website');
+    modal.find('.modal-body #ws-locked').val(''); 
+    modal.find('.modal-body #ws-updated').val(''); 
   }
   
   
