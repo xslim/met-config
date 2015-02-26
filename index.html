@@ -17,7 +17,18 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div class="container">
+      
+      
+    <p>API host:
+      <input id="api_host" type="text" style="width:350px;" value="http://localhost:3000" />
+      <button type="button" id="apiConnect" onclick="api_connect()">Load</button>
+    </p>
+    
+    <div id="content">
+    </div>
+      
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
