@@ -18,15 +18,27 @@
   </head>
   <body>
     <div class="container">
+      <div class="row">
+      <p>API host:
+        <input id="api_host" type="text" style="width:350px;" value="http://localhost:3000" />
+        <button type="button" id="apiConnect" onclick="api_connect()">Load</button>
+      </p>
       
+      <table class="table">
+        <thead><tr>
+          <th>#</th>
+          <th>Url</th>
+          <th>Added</th>
+          <th>Locked</th>
+          <th>Updated</th>
+        </tr></thead>
+        <tbody id="data_t_body">
+          
+        </tbody></table>
       
-    <p>API host:
-      <input id="api_host" type="text" style="width:350px;" value="http://localhost:3000" />
-      <button type="button" id="apiConnect" onclick="api_connect()">Load</button>
-    </p>
-    
-    <div id="content">
-    </div>
+        
+      </div>
+      
       
     </div>
 
