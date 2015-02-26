@@ -1,0 +1,31 @@
+{
+  "name": "mrt-config",
+  "version": "0.0.1",
+  "description": "Config server",
+  "main": "app.js",
+  "dependencies": {
+    "good": "^5.1.2",
+    "good-console": "^4.1.0",
+    "hapi": "^8.2.0",
+    "mongoose": "^3.8.24",
+    "node-env": "^0.1.6",
+    "node-env-file": "^0.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xslim/mrt-config.git"
+  },
+  "keywords": [
+    "config"
+  ],
+  "author": "Taras Kalapun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xslim/mrt-config/issues"
+  },
+  "homepage": "https://github.com/xslim/mrt-config"
+}
