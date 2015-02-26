@@ -27,19 +27,19 @@ function getJSON(url, callback) {
 function sendPayload(url, payload, callback) {
   request = new XMLHttpRequest();
   request.open('POST', url, true);
-  request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  request.onload = function() {
-    if (this.status >= 200 && this.status < 400){
-      // Success!
-      data = JSON.parse(this.response);
-      callback(data);
-    } else {
-      // We reached our target server, but it returned an error
-    }
-  };
-  request.onerror = function() {
-    // There was a connection error of some sort
-  };
+  request.setRequestHeader("Content-Type", "application/json");
+  // request.onload = function() {
+  //   if (this.status >= 200 && this.status < 400){
+  //     // Success!
+  //     data = JSON.parse(this.response);
+  //     callback(data);
+  //   } else {
+  //     // We reached our target server, but it returned an error
+  //   }
+  // };
+  // request.onerror = function() {
+  //   // There was a connection error of some sort
+  // };
   request.send(JSON.stringify(payload));
 }
 
