@@ -38,8 +38,8 @@ function api_connect() {
     for (i = 0; i < data.length; i++) { 
       var d = data[i];
       html += '<tr class="'+odd+'">';
-      html += '<td>'+d._id+'</td><td>'+d.url+'</td>';
-      html += '<td>'+d.added+'</td><td>'+d.locked+'</td><td>'+d.updated+'</td>';
+      html += '<td><a href="#" data-toggle="modal" data-target="#wsModal" data-id="'+d._id+'">'+d._id+'</a></td>';
+      html += '<td>'+d.url+'</td><td>'+d.added+'</td><td>'+d.locked+'</td><td>'+d.updated+'</td>';
       html += "</tr>\n";
       if (odd == "odd") {odd = "even"};
     }
@@ -52,3 +52,13 @@ function api_connect() {
 if (localStorage.getItem('api_host')) {
   el("#api_host").value = localStorage.getItem('api_host');
 }
+
+$('#wsModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var id = button.data('id') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('Editing ' + id)
+  modal.find('.modal-body input').val(id)
+})
