@@ -59,6 +59,15 @@ $('#wsModal').on('show.bs.modal', function (event) {
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
-  modal.find('.modal-title').text('Editing ' + id)
-  modal.find('.modal-body #ws-url').val(id)
+  modal.find('.modal-title').text('Editing ' + id);
+  
+  getJSON(api_host+'/websites/'+id, function(d){
+    modal.find('.modal-body #ws-url').val(d.url); 
+    modal.find('.modal-body #ws-depth').val(d.depth);
+    modal.find('.modal-body #ws-topn').val(d.topn);
+    modal.find('.modal-body #ws-indexName').val(d.indexName);
+    modal.find('.modal-body #ws-regex').val(d.regex);
+  });
+  
+  
 })
