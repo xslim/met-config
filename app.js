@@ -24,6 +24,25 @@ function getJSON(url, callback) {
   request.send();
 }
 
+function sendPayload(url, payload, callback) {
+  request = new XMLHttpRequest();
+  request.open('POST', url);
+  request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  request.onload = function() {
+    if (this.status >= 200 && this.status < 400){
+      // Success!
+      data = JSON.parse(this.response);
+      callback(data);
+    } else {
+      // We reached our target server, but it returned an error
+    }
+  };
+  request.onerror = function() {
+    // There was a connection error of some sort
+  };
+  request.send(JSON.stringify(payload));
+}
+
 function api_connect() {
   api_host = el("#api_host").value;
   localStorage.setItem('api_host', api_host);
@@ -71,3 +90,14 @@ $('#wsModal').on('show.bs.modal', function (event) {
   
   
 })
+
+function saveForm() {
+  var modal = $('#wsModal');
+  var payload = {
+    url: modal.find('.modal-body #ws-url').val();
+  };
+  console.log('Sending payload: '+payload);
+  sendPayload(api_host+'/websites/'+id, payload, function(data){
+    console.log(data);
+  });
+}
