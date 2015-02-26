@@ -24,7 +24,7 @@ function getJSON(url, callback) {
   request.send();
 }
 
-function sendPayload(url, payload, callback) {
+function postJSON(url, payload, callback) {
   request = new XMLHttpRequest();
   request.open('POST', url, true);
   request.setRequestHeader("Content-Type", "application/json");
@@ -41,6 +41,24 @@ function sendPayload(url, payload, callback) {
     // There was a connection error of some sort
   };
   request.send(JSON.stringify(payload));
+}
+
+function sendDelete(url, callback) {
+  request = new XMLHttpRequest();
+  request.open('DELETE', url, true);
+  request.onload = function() {
+    if (this.status >= 200 && this.status < 400){
+      // Success!
+      data = JSON.parse(this.response);
+      callback(data);
+    } else {
+      // We reached our target server, but it returned an error
+    }
+  };
+  request.onerror = function() {
+    // There was a connection error of some sort
+  };
+  request.send();
 }
 
 function api_connect() {
@@ -78,7 +96,9 @@ $('#wsModal').on('show.bs.modal', function (event) {
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
-  modal.find('.modal-title').text('Editing ' + id);
+  
+  if (id && id.length > 1) {
+    modal.find('.modal-title').text('Editing ' + id);
   
   getJSON(api_host+'/websites/'+id, function(d){
     modal.find('.modal-body #ws-id').val(id); 
@@ -88,18 +108,37 @@ $('#wsModal').on('show.bs.modal', function (event) {
     modal.find('.modal-body #ws-indexName').val(d.indexName);
     modal.find('.modal-body #ws-regex').val(d.regex);
   });
+  } else {
+    modal.find('.modal-title').text('Creating new website ');
+    modal.find('.modal-body #ws-url').val('http://'); 
+    modal.find('.modal-body #ws-depth').val(2);
+    modal.find('.modal-body #ws-topn').val(50);
+    modal.find('.modal-body #ws-indexName').val('website');
+  }
+  
   
   
 })
 
-function saveForm() {
+function saveAction() {
   var modal = $('#wsModal');
   var id = modal.find('.modal-body #ws-id').val();
   var payload = {
     url: modal.find('.modal-body #ws-url').val(),
   };
-  console.log('Sending payload: '+payload);
-  sendPayload(api_host+'/websites/'+id, payload, function(data){
-    console.log(data);
+  postJSON(api_host+'/websites/'+id, payload, function(data){
+    //console.log(data);
+    $('#wsModal').modal('hide');
+    api_connect();
+  });
+}
+
+function deleteAction() {
+  var modal = $('#wsModal');
+  var id = modal.find('.modal-body #ws-id').val();
+  
+  sendDelete(api_host+'/websites/'+id, function(data){
+    $('#wsModal').modal('hide');
+    api_connect();
   });
 }
