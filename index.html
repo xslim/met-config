@@ -23,6 +23,9 @@
         <input id="api_host" type="text" style="width:350px;" value="http://localhost:3000" />
         <button type="button" id="apiConnect" onclick="api_connect()">Load</button>
       </p>
+      <br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#wsModal">New</button>
+      <br>
       
       <table class="table">
         <thead><tr>
@@ -68,7 +71,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="saveForm()">Save</button>
+        <button type="button" class="btn btn-danger" onclick="deleteAction()">Delete</button>
+        <button type="button" class="btn btn-primary" onclick="saveAction()">Save</button>
       </div>
     </div>
   </div>
