@@ -100,16 +100,17 @@ $('#wsModal').on('show.bs.modal', function (event) {
   if (id && id.length > 1) {
     modal.find('.modal-title').text('Editing ' + id);
   
-  getJSON(api_host+'/websites/'+id, function(d){
-    modal.find('.modal-body #ws-id').val(id); 
-    modal.find('.modal-body #ws-url').val(d.url); 
-    modal.find('.modal-body #ws-depth').val(d.depth);
-    modal.find('.modal-body #ws-topn').val(d.topn);
-    modal.find('.modal-body #ws-indexName').val(d.indexName);
-    modal.find('.modal-body #ws-regex').val(d.regex);
-  });
+    getJSON(api_host+'/websites/'+id, function(d){
+      modal.find('.modal-body #ws-id').val(id); 
+      modal.find('.modal-body #ws-url').val(d.url); 
+      modal.find('.modal-body #ws-depth').val(d.depth);
+      modal.find('.modal-body #ws-topn').val(d.topn);
+      modal.find('.modal-body #ws-indexName').val(d.indexName);
+      modal.find('.modal-body #ws-regex').val(d.regex);
+    });
   } else {
     modal.find('.modal-title').text('Creating new website ');
+    modal.find('.modal-body #ws-id').val(''); 
     modal.find('.modal-body #ws-url').val('http://'); 
     modal.find('.modal-body #ws-depth').val(2);
     modal.find('.modal-body #ws-topn').val(50);
