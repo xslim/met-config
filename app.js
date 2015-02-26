@@ -26,7 +26,7 @@ function getJSON(url, callback) {
 
 function sendPayload(url, payload, callback) {
   request = new XMLHttpRequest();
-  request.open('POST', url);
+  request.open('POST', url, true);
   request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   request.onload = function() {
     if (this.status >= 200 && this.status < 400){
