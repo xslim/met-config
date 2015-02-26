@@ -95,7 +95,7 @@ function saveForm() {
   var modal = $('#wsModal');
   var id = modal.find('.modal-body #ws-id').val();
   var payload = {
-    url: modal.find('.modal-body #ws-url').val();
+    url: modal.find('.modal-body #ws-url').val(),
   };
   console.log('Sending payload: '+payload);
   sendPayload(api_host+'/websites/'+id, payload, function(data){
