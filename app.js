@@ -81,6 +81,7 @@ $('#wsModal').on('show.bs.modal', function (event) {
   modal.find('.modal-title').text('Editing ' + id);
   
   getJSON(api_host+'/websites/'+id, function(d){
+    modal.find('.modal-body #ws-id').val(id); 
     modal.find('.modal-body #ws-url').val(d.url); 
     modal.find('.modal-body #ws-depth').val(d.depth);
     modal.find('.modal-body #ws-topn').val(d.topn);
