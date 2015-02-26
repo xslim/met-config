@@ -60,5 +60,5 @@ $('#wsModal').on('show.bs.modal', function (event) {
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
   modal.find('.modal-title').text('Editing ' + id)
-  modal.find('.modal-body input').val(id)
+  modal.find('.modal-body #ws-url').val(id)
 })
