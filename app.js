@@ -26,10 +26,15 @@ function getJSON(url, callback) {
 
 function api_connect() {
   api_host = el("#api_host").value;
+  localStorage.setItem('api_host', api_host);
   console.log('Connecting to '+api_host);
   
   getJSON(api_host+'/websites', function(data){
     console.log(data);
   });
   
+}
+
+if (localStorage.getItem('api_host')) {
+  el("#api_host").value = localStorage.getItem('api_host');
 }
