@@ -24,8 +24,7 @@ function check_err(err, res) {
 }
 
 function newWS(req, res) {
-  console.log(req.payload);
-  var ws = new WS();
+  var ws = new WS(req.payload);
   ws.save(function (err) {
     if (err) {
       res(err);
@@ -35,14 +34,35 @@ function newWS(req, res) {
   });
 }
 
-function nextWS(req, res) {
-  var nextId = "123";
-  res(nextId);
+function nextWS(req, res, lock) {
+  var days = 3;
+  var cutoff = new Date();
+  cutoff.setDate(cutoff.getDate()-days);
+
+  WS.findOne().or([{ updated: {$lt: cutoff} }, {updated: ''}])
+  .exec(function(err, ws){
+    if (check_err(err, res)) {  return; }
+    if (lock) {
+      //console.log('Will lock ' + ws._id);
+      ws.locked = new Date();
+      ws.save(function (err) {
+        //console.log('Saving');
+        //console.log(err)
+        if (err) {
+          res(err);
+          return;
+        }
+        res(ws);
+      });
+    } else {
+      res(ws);
+    }
+  });
+  
 }
 
 function nextWSlock(req, res) {
-  var nextId = "123";
-  res(nextId);
+  nextWS(req, res, true);
 }
 
 function listWS(req, res) {
@@ -53,9 +73,49 @@ function listWS(req, res) {
   });
 }
 
+function deleteWS(req, res) {
+  var id = req.params.id;
+
+  WS.remove({ _id: id }, function(err, ws){
+    if (check_err(err, res)) {  return; }
+    var code = (ws) ? 200 : 404;
+    res(ws).code(code);
+  });
+}
+
+
+function unlockWS(req, res) {
+  var id = req.params.id;
+  WS.findById(id, function(err, ws){
+    if (check_err(err, res)) {  return; }
+    ws.locked = '';
+    ws.updated = new Date();
+    ws.save(function (err) {
+        if (err) {
+          res(err);
+          return;
+        }
+        res(ws);
+      });
+  });
+}
+
 function getWS(req, res) {
   var id = req.params.id;
-  WS.findOne(id, function(err, ws){
+  console.log('Searching by: '+id);
+  WS.findById(id, function(err, ws){
+    if (check_err(err, res)) {  return; }
+    var code = (ws) ? 200 : 404;
+    console.log('Returning: '+ws._id);
+    res(ws).code(code);
+  });
+}
+
+function updateWS(req, res) {
+  //console.log(req.payload);
+  if (!req.payload) { res().code(404); return; }
+  var id = req.params.id;
+  WS.findByIdAndUpdate(id, { $set: req.payload }, function(err, ws){
     if (check_err(err, res)) {  return; }
     var code = (ws) ? 200 : 404;
     res(ws).code(code);
@@ -71,11 +131,27 @@ function purgeWS(req, res) {
 }
 
 var wsp = '/websites'
+var rConfig = {cors: true};
+
+function xroute(method, path, handler) {
+  return {
+    method: method,
+    path: '/websites'+path,
+    config: {
+      cors: true,
+      handler: handler
+    }
+  };
+}
+
 module.exports = [
-    { method: 'GET', path: wsp, handler: listWS },
-    { method: 'POST', path: wsp+'/new', handler: newWS },
-    { method: 'GET', path: wsp+'/next', handler: nextWS },
-    { method: 'POST', path: wsp+'/next', handler: nextWSlock },
-    { method: 'POST', path: wsp+'/purge', handler: purgeWS },
-    { method: 'GET', path: wsp+'/{id}', handler: getWS }
+  xroute('GET', '', listWS),
+  xroute('GET', '/{id}', getWS),
+  xroute(['POST', 'OPTIONS'], '/{id}', updateWS),
+  xroute(['POST', 'OPTIONS'], '/', newWS),
+  xroute('DELETE', '/{id}', deleteWS),
+  xroute('GET', '/next', nextWS),
+  xroute('POST', '/next', nextWSlock),
+  xroute('POST', '/{id}/unlock', unlockWS),
+  xroute('POST', '/purge', purgeWS),
 ];

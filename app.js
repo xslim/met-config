@@ -24,15 +24,7 @@ var sOptions = {
       stripTrailingSlash: true
     }
   },
-  validation: { allowUnknown: true },
-  routes: {
-    validate: {
-      options: {
-        stripUnknown: true
-      }
-    }
-    //validation: { stripUnknown: true }
-  }
+  routes: { cors: true }
 };
 
 var server = new Hapi.Server();
