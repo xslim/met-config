@@ -23,6 +23,15 @@ var sOptions = {
       isCaseSensitive: false,
       stripTrailingSlash: true
     }
+  },
+  validation: { allowUnknown: true },
+  routes: {
+    validate: {
+      options: {
+        stripUnknown: true
+      }
+    }
+    //validation: { stripUnknown: true }
   }
 };
 
