@@ -40,6 +40,7 @@ server.route({
 });
 
 server.route(require('./routes/websites'));
+server.route(require('./routes/indexers'));
 
 server.register({
     register: Good,
