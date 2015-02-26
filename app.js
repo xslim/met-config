@@ -30,7 +30,20 @@ function api_connect() {
   console.log('Connecting to '+api_host);
   
   getJSON(api_host+'/websites', function(data){
-    console.log(data);
+    //console.log(data);
+    var html = "";
+    
+    var i;
+    var odd = "odd";
+    for (i = 0; i < data.length; i++) { 
+      html += '<tr class="'+odd+'">';
+      html += '<td>'+data._id+'</td><td>'+data.url+'</td>';
+      html += '<td>'+data.added+'</td><td>'+data.locked+'</td><td>'+data.updated+'</td>';
+      html += "</tr>\n";
+      if (odd == "odd") {odd = "even"};
+    }
+    
+    el("#data_t_body").innerHTML = html;
   });
   
 }
