@@ -91,7 +91,7 @@ $('#wsModal').on('show.bs.modal', function (event) {
   
 })
 
-function saveForm() {
+function saveForm(id) {
   var modal = $('#wsModal');
   var payload = {
     url: modal.find('.modal-body #ws-url').val();
