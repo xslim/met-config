@@ -36,9 +36,10 @@ function api_connect() {
     var i;
     var odd = "odd";
     for (i = 0; i < data.length; i++) { 
+      var d = data[i];
       html += '<tr class="'+odd+'">';
-      html += '<td>'+data._id+'</td><td>'+data.url+'</td>';
-      html += '<td>'+data.added+'</td><td>'+data.locked+'</td><td>'+data.updated+'</td>';
+      html += '<td>'+d._id+'</td><td>'+d.url+'</td>';
+      html += '<td>'+d.added+'</td><td>'+d.locked+'</td><td>'+d.updated+'</td>';
       html += "</tr>\n";
       if (odd == "odd") {odd = "even"};
     }
