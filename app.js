@@ -97,28 +97,31 @@ $('#wsModal').on('show.bs.modal', function (event) {
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
   
+  var newModel = {
+    url: '',
+    data: {
+      base: '',
+      url: '',
+      title: '',
+      price: '',
+      description: ''
+    }
+  };
+  var yaml = '';
+  
+  
   if (id && id.length > 1) {
     modal.find('.modal-title').text('Editing ' + id);
   
     getJSON(api_host+'/websites/'+id, function(d){
+      yaml = jsyaml.safeDump(d);
       modal.find('.modal-body #ws-id').val(id); 
-      modal.find('.modal-body #ws-url').val(d.url); 
-      modal.find('.modal-body #ws-depth').val(d.depth);
-      modal.find('.modal-body #ws-topn').val(d.topn);
-      modal.find('.modal-body #ws-indexName').val(d.indexName);
-      modal.find('.modal-body #ws-regex').val(d.regex);
-      modal.find('.modal-body #ws-locked').val(d.locked); 
-    modal.find('.modal-body #ws-updated').val(d.updated); 
+      modal.find('.modal-body #ws-yaml').val(yaml); 
     });
   } else {
+    yaml = jsyaml.safeDump(newModel);
     modal.find('.modal-title').text('Creating new website ');
-    modal.find('.modal-body #ws-id').val(''); 
-    modal.find('.modal-body #ws-url').val('http://'); 
-    modal.find('.modal-body #ws-depth').val(2);
-    modal.find('.modal-body #ws-topn').val(50);
-    modal.find('.modal-body #ws-indexName').val('website');
-    modal.find('.modal-body #ws-locked').val(''); 
-    modal.find('.modal-body #ws-updated').val(''); 
+    modal.find('.modal-body #ws-yaml').val(yaml);
   }
   
   
