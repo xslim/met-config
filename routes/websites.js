@@ -7,10 +7,17 @@ var WS = mongoose.model('Website', {
   depth:     { type: Number, default: 2 }, 
   topn:      { type: Number, default: 50 },
   regex:     { type: String, default: '' },
-  indexName: { type: String, default: 'website' },
+  category:  { type: String, default: 'website' },
   added:     { type: Date, default: Date.now },
   updated:   { type: Date },
   locked:    { type: Date },
+  data: {
+    base:         { type: String, default: '' },
+    url:          { type: String, default: '' },
+    title:        { type: String, default: '' },
+    price:        { type: String, default: '' },
+    description:  { type: String, default: '' },
+  }
 });
 
 
@@ -34,6 +41,14 @@ function newWS(req, res) {
   });
 }
 
+function elasticConfig() {
+  return {
+    host: 'http://elastic-kalapun.rhcloud.com:80',
+    version: '0.90'
+  }
+}
+
+
 function nextWS(req, res, lock) {
   var days = 3;
   var cutoff = new Date();
@@ -52,9 +67,13 @@ function nextWS(req, res, lock) {
           res(err);
           return;
         }
+        ws = ws.toObject();
+        ws.elastic = elasticConfig();
         res(ws);
       });
     } else {
+      ws = ws.toObject();
+      ws.elastic = elasticConfig();
       res(ws);
     }
   });

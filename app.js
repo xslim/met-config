@@ -28,7 +28,7 @@ var sOptions = {
 };
 
 var server = new Hapi.Server();
-var port = process.env.PORT || 3000; 
+var port = process.env.PORT || 3001; 
 server.connection({ port: port});
 
 server.route({
