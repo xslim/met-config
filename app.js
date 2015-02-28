@@ -114,6 +114,10 @@ $('#wsModal').on('show.bs.modal', function (event) {
     modal.find('.modal-title').text('Editing ' + id);
   
     getJSON(api_host+'/websites/'+id, function(d){
+      delete d['_id'];
+      delete d['__v'];
+      delete d['_id'];
+      
       yaml = jsyaml.safeDump(d);
       modal.find('.modal-body #ws-id').val(id); 
       modal.find('.modal-body #ws-yaml').val(yaml); 
@@ -131,15 +135,9 @@ $('#wsModal').on('show.bs.modal', function (event) {
 function saveAction() {
   var modal = $('#wsModal');
   var id = modal.find('.modal-body #ws-id').val();
-  var payload = {
-    url: modal.find('.modal-body #ws-url').val(),
-    depth: modal.find('.modal-body #ws-depth').val(),
-    topn: modal.find('.modal-body #ws-topn').val(),
-    regex: modal.find('.modal-body #ws-regex').val(),
-    indexName: modal.find('.modal-body #ws-indexName').val(),
-    locked: modal.find('.modal-body #ws-locked').val(),
-    updated: modal.find('.modal-body #ws-updated').val(),
-  };
+  var yaml = modal.find('.modal-body #ws-yaml').val();
+  var payload = jsyaml.safeLoad(yaml);
+  console.log(payload);
   postJSON(api_host+'/websites/'+id, payload, function(data){
     //console.log(data);
     $('#wsModal').modal('hide');
