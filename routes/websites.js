@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 //var db = mongoose.connection; 
 
-var WS = mongoose.model('Website', { 
+var WS = mongoose.model('Website', {
   url:       { type: String, default: '' },
   depth:     { type: Number, default: 2 }, 
   topn:      { type: Number, default: 50 },
@@ -18,6 +18,7 @@ var WS = mongoose.model('Website', {
     price:        { type: String, default: '' },
     description:  { type: String, default: '' },
   }
+  next:       { type: Boolean, default: false },
 });
 
 
@@ -54,8 +55,8 @@ function nextWS(req, res, lock) {
   var cutoff = new Date();
   cutoff.setDate(cutoff.getDate()-days);
 
-  WS.findOne().or([{ updated: {$lt: cutoff} }, {updated: ''}])
-  .exec(function(err, ws){
+  //.or([{ updated: {$lt: cutoff} }, {updated: ''}])
+  WS.findOne({next:true}, (function(err, ws){
     if (check_err(err, res)) {  return; }
     if (lock) {
       //console.log('Will lock ' + ws._id);
