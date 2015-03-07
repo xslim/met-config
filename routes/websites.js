@@ -58,7 +58,7 @@ function nextWS(req, res, lock) {
   cutoff.setDate(cutoff.getDate()-days);
 
   //.or([{ updated: {$lt: cutoff} }, {updated: ''}])
-  WS.findOne({next:true}, function(err, ws){
+  WS.findOne().or({next:true}).exec(function(err, ws){
     if (check_err(err, res)) {  return; }
     if (lock) {
       //console.log('Will lock ' + ws._id);
