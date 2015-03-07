@@ -17,6 +17,8 @@ var WS = mongoose.model('Website', {
     title:        { type: String, default: '' },
     price:        { type: String, default: '' },
     description:  { type: String, default: '' },
+    category:     { type: String, default: '' },
+    img:          { type: String, default: '' },
   },
   next:       { type: Boolean, default: false },
 });
