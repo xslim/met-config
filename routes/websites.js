@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
-//var db = mongoose.connection; 
+//var db = mongoose.connection;
 
 var WS = mongoose.model('Website', {
   url:       { type: String, default: '' },
-  depth:     { type: Number, default: 2 }, 
+  depth:     { type: Number, default: 2 },
   topn:      { type: Number, default: 50 },
   regex:     { type: String, default: '' },
   category:  { type: String, default: 'website' },
@@ -46,7 +46,7 @@ function newWS(req, res) {
 
 function elasticConfig() {
   return {
-    host: 'http://elastic-kalapun.rhcloud.com:80',
+    host: 'http://elasticsearchtest-andreivisan.rhcloud.com:80',
     version: '0.90'
   }
 }
@@ -80,7 +80,7 @@ function nextWS(req, res, lock) {
       res(ws);
     }
   });
-  
+
 }
 
 function nextWSlock(req, res) {
